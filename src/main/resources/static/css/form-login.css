@@ -1,0 +1,83 @@
+/* form-login.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d9dadb; /* Fundo para a página de login */
+    /* Remova a cor de texto global do body aqui, pois o cabecalho.css já define uma */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-container {
+    max-width: 400px;
+    padding: 30px;
+    background-color: #050505; /* Fundo do container de login */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+h1 {
+    color: #ffffff; /* Título dentro do container de login */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+hr {
+    border-top: 1px solid rgba(255,255,255,.1); /* Borda da linha para ser visível no fundo escuro */
+    margin-bottom: 20px;
+}
+
+/* ********** SOLUÇÃO: Aumentar a especificidade para as labels do formulário de login ********** */
+.login-container label {
+    color: #ffffff; /* Define explicitamente a cor branca para as labels dentro do container de login */
+}
+
+
+/*  */
+
+.login-container p {
+    color: #ffffff; /* Define a cor branca para todos os parágrafos dentro do container de login */
+}
+
+/* Adicione esta regra para a cor do link */
+.login-container a {
+    color: #ffffff; /* Define a cor branca para todos os links dentro do container de login */
+    /* Opcional: para um leve destaque no link, se quiser que ele pareça um pouco diferente do texto ao redor */
+    /* text-decoration: underline; */
+}
+
+.login-container a:hover {
+    color: #cccccc; /* Cor do link ao passar o mouse, um branco mais suave */
+}
+
+/*  */
+
+/* Adicione/ajuste outros estilos para inputs, botões, etc. aqui */
+.login-container .form-control {
+    background-color: #333333; /* Fundo do input */
+    color: #ffffff; /* Cor do texto digitado no input */
+    border-color: #555555;
+}
+.login-container .form-control::placeholder { /* Cor do placeholder */
+    color: #aaaaaa;
+}
+
+.login-container .alert {
+    color: #721c24; /* Cor do texto do alerta de erro */
+    background-color: #f8d7da; /* Cor de fundo do alerta de erro */
+    border-color: #f5c6cb;
+}
+
+.login-container .btn-primary {
+    background-color: #007bff; /* Cor do botão primário */
+    border-color: #007bff;
+}
+
+.login-container a {
+    color: #007bff; /* Cor dos links dentro do container de login */
+}
+.login-container a:hover {
+    color: #0056b3;
+}

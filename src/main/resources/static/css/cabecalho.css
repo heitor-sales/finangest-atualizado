@@ -1,0 +1,48 @@
+/* Estilos gerais do corpo da página (afeta o fundo, texto, fonte, margens da página como um todo) */
+body {
+    background-color: #f8f9fa; /* Cor de fundo suave */
+    color: #343a40; /* Cor de texto principal */
+    font-family: -apple-system, BlinkMacSyste, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+    padding-top: 56px;
+
+}
+
+/* Estilo para a barra de navegação (cabeçalho) */
+.navbar {
+    background-color: #343a40; /* Cor escura de fundo para o cabeçalho */
+    padding: 1rem;
+}
+
+/* Estilo para o nome do site (marca) no cabeçalho */
+.navbar-brand {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Estilo para os links de navegação */
+.nav-link {
+    color: rgba(255, 255, 255, 0.7); /* Cor do link */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff; /* Cor do link ao passar o mouse */
+}
+
+/* Estilo para o nome do usuário logado no cabeçalho */
+.navbar-nav span { /* Este seletor afeta o <span> dentro de .navbar-nav */
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    /* align-self: center; // Este está no CSS mas não no HTML fornecido no trecho específico do nav */
+}
+
+/* Estilo para o nome do usuário logado no cabeçalho (seletor mais específico que você usa no HTML) */
+.user-email {
+    color: #ffffff;
+    font-weight: 500;
+}

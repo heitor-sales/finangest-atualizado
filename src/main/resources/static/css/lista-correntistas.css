@@ -1,0 +1,170 @@
+/*=====================================
+  Seção 1: Variáveis e Resets Globais
+=======================================*/
+:root {
+  /* Cores */
+  --cor-fundo-body: #e9ecef;
+  --cor-texto-principal: #343a40;
+  --cor-fundo-container: rgba(255, 255, 255, 0.95);
+  --cor-sombra: rgba(0, 0, 0, 0.15);
+  --cor-borda-tabela: #dee2e6;
+  --cor-primaria: #0d6efd; /* Bootstrap blue */
+
+  /* Espaçamento */
+  --padding-container: 40px;
+  --margem-container: 3rem auto;
+  --gap-botoes: 15px;
+
+  /* Fontes e Tamanhos */
+  --fonte-principal: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --tamanho-fonte-botao: 0.95rem;
+  --tamanho-fonte-botao-sm: 0.85rem;
+}
+
+body {
+  font-family: var(--fonte-principal);
+  background-color: var(--cor-fundo-body);
+  color: var(--cor-texto-principal);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/*=====================================
+  Seção 2: Layout e Estrutura Principal
+=======================================*/
+.main-content-container {
+  max-width: 1100px;
+  width: 100%;
+  margin: var(--margem-container);
+  padding: var(--padding-container);
+  background-color: var(--cor-fundo-container);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px var(--cor-sombra);
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*=====================================
+  Seção 3: Tipografia e Componentes
+=======================================*/
+h1 {
+  color: #000000;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600;
+}
+
+hr {
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(to right, rgba(0, 123, 255, 0), rgba(0, 123, 255, 0.75), rgba(0, 123, 255, 0));
+  margin-bottom: 30px;
+}
+
+.alert {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  padding: 15px 20px;
+}
+
+/*=====================================
+  Seção 4: Estilos da Tabela
+=======================================*/
+.table {
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  vertical-align: middle; /* Alinha o conteúdo verticalmente */
+  padding: 12px 15px; /* Ajusta o padding para espaçamento */
+}
+
+.table thead th {
+  font-weight: 600;
+}
+
+/* Estilo para a coluna de Ações */
+.table .d-flex.gap-2 {
+  flex-wrap: nowrap; /* Impede a quebra de linha nos botões de ação */
+}
+
+/*=====================================
+  Seção 5: Botões e Controles
+=======================================*/
+.btn {
+  font-size: var(--tamanho-fonte-botao);
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-sm {
+  padding: 6px 10px;
+  font-size: var(--tamanho-fonte-botao-sm);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-botoes);
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ced4da;
+}
+
+/*=====================================
+  Seção 6: Responsividade
+=======================================*/
+@media (max-width: 992px) {
+  .main-content-container {
+    max-width: 95%;
+    padding: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content-container {
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table th,
+  .table td {
+    white-space: nowrap;
+  }
+  .bottom-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bottom-buttons .btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,35 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Finangest</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contas/list}">Contas</a>
+                </li>
+                <li class="nav-item" th:if="${session.usuario != null and session.usuario.admin}">
+                    <a class="nav-link" th:href="@{/correntistas/list}">Correntistas</a>
+                </li>
+                
+            </ul>
+
+            <div class="d-flex align-items-center" th:if="${session.usuario != null}">
+                <span class="user-email me-3" th:text="${session.usuario.nome}"></span>
+                <a class="btn btn-danger" th:href="@{/login/logout}">Sair</a>
+            </div>
+            <div th:unless="${session.usuario != null}">
+                <a class="btn btn-primary" th:href="@{/login/form}">Fazer Login</a>
+                <a class="btn btn-secondary" th:href="@{/correntistas/form}">Cadastrar-se</a>
+            </div>
+        </div>
+    </div>
+</nav>

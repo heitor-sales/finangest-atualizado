@@ -1,0 +1,8 @@
+.clickable-row {
+    cursor: pointer;/* Muda o cursor para uma "mão" quando o mouse passa por cima */
+}
+
+/* Opcional: Adiciona um leve efeito de fundo ao passar o mouse para reforçar a clicabilidade */
+.clickable-row:hover {
+    background-color: #f0f0f0; /* Uma cor de fundo mais clara ao passar o mouse */
+}

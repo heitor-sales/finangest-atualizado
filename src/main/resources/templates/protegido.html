@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    
+</head>
+<body>
+    <h1>Bem-vindo(a)!</h1>
+    <hr/>
+
+    <p class="welcome-message">Olá, <span th:text="${login}">Usuário</span>!</p>
+
+    <p>Esta é a sua área restrita. Você fez login com sucesso.</p>
+
+    <a th:href="@{/home}">Sair</a>
+
+</body>
+</html>

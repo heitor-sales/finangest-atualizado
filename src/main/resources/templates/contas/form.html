@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finangest - Cadastro de Contas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/css/cabecalho.css}">
+
+</head>
+<body>
+
+    <div th:insert="~{cabecalho}"></div>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Cadastro de Contas</h1>
+
+        <form th:action="@{/contas/save}" method="POST" th:object="${conta}" class="needs-validation" novalidate>
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="mb-3">
+                <label for="numero" class="form-label">Número</label>
+                <input type="text" th:field="*{numero}" id="numero" class="form-control"/>
+                <p th:if="${#fields.hasErrors('numero')}" th:errorsClass="error" th:errors="*{numero}"></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <input type="text" th:field="*{descricao}" id="descricao" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                
+                <label for="tipo" class="form-label">Tipo</label>
+                <select th:field="*{tipo}" id="tipo" class="form-select" required>
+                    <option value="">Selecione o Tipo</option>
+                    <option th:each="tipoEnum : ${T(br.edu.ifpb.pweb2.finangest.model.TipoConta).values()}"
+                            th:value="${tipoEnum}"
+                            th:text="${tipoEnum.descricao}">
+                    </option>
+                </select>
+                <p th:if="${#fields.hasErrors('tipo')}" th:errorsClass="error" th:errors="*{tipo}"></p>
+            </div>
+
+            <div th:if="${session.usuario != null and session.usuario.admin}" class="mb-3">
+                <label for="correntista" class="form-label">Correntista</label>
+                <select th:field="*{correntista.id}" id="correntista" class="form-select" required>
+                    <option value="">Selecione um Correntista</option>
+                    <option th:each="cor : ${correntistaItems}"
+                            th:value="${cor.id}"
+                            th:text="${cor.nome}">
+                    </option>
+                </select>
+                <div class="invalid-feedback">
+                    Por favor, selecione um correntista.
+                </div>
+            </div>
+
+            <div id="diaFechamentoGroup" class="mb-3" style="display: none;">
+                <label for="diaFechamento" class="form-label">Dia de Fechamento (Cartão de Crédito)</label>
+                <input type="number" th:field="*{diaFechamento}" id="diaFechamento" class="form-control" min="1" max="31" />
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-flex justify-content-start">
+                <button type="submit" class="btn btn-primary me-2">Salvar</button>
+                <a th:href="@{/contas/list}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+
+    <script th:src="@{/js/contasForm.js}"></script>
+</body>
+</html>

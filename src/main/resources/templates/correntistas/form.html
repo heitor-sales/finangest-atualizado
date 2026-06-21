@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Correntista - Finangest</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/css/cadastro-correntista.css}">
+    <link rel="stylesheet" th:href="@{/css/cabecalho.css}">
+</head>
+<body>
+
+    <div th:insert="~{cabecalho}"></div>
+
+    <div class="container">
+        <h1 class="text-center">Cadastro de Correntista</h1>
+        <hr/>
+
+        <div th:if="${mensagem != null}" th:classappend="${mensagem.contains('sucesso') ? 'alert-success' : 'alert-danger'}" class="alert" role="alert">
+            <span th:text="${mensagem}"></span>
+        </div>
+        
+        <form th:action="@{/correntistas/save}" method="POST" th:object="${correntista}">
+            <input type="hidden" th:field="*{id}"> <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" class="form-control" id="nome" th:field="*{nome}">
+                <p th:if="${#fields.hasErrors('nome')}" th:errorsClass="error" th:errors="*{nome}"></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="senha" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="senha" th:field="*{senha}" >
+                <p th:if="${#fields.hasErrors('senha')}" th:errorsClass="error" th:errors="*{senha}"></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}">
+                <p th:if="${#fields.hasErrors('email')}" th:errorsClass="error" th:errors="*{email}"></p>
+            </div>
+
+            <div th:if="${session.usuario != null and session.usuario.admin}" class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="admin" th:field="*{admin}">
+                <label class="form-check-label" for="admin" >Admin?</label>
+            </div>
+            
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <span th:if="${session.usuario != null and session.usuario.admin}">
+                    <a th:href="@{/correntistas/list}" class="btn btn-secondary mt-2">Cancelar / ir para Lista</a>
+                </span>
+                
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

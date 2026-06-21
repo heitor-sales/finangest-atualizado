@@ -1,0 +1,65 @@
+/* Estilos gerais do corpo da página */
+body {
+    background-color: #f8f9fa;
+    color: #010101;
+    font-family: -apple-system, BlinkMacSyste, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+    /* --- NOVAS PROPRIEDADES PARA CENTRALIZAÇÃO --- */
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
+   
+}
+
+/* Estilo para a barra de navegação (cabeçalho) */
+.navbar {
+    
+    background-color: #343a40;
+    padding: 1rem;
+   
+}
+.navbar p, .navbar span, .navbar a { 
+    color: #ffffff;
+}
+
+
+
+
+.logout-button {
+    position: fixed; 
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: transparent;
+    border: 2px solid #dc3545;
+    color: #dc3545;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.logout-button:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+/* Estilo para o contêiner principal da página */
+.main-content-container {
+    max-width: 900px;
+    width: 90%; 
+    margin: auto; 
+
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
