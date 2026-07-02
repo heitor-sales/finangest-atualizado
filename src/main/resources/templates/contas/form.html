@@ -34,7 +34,6 @@
             </div>
 
             <div class="mb-3">
-                
                 <label for="tipo" class="form-label">Tipo</label>
                 <select th:field="*{tipo}" id="tipo" class="form-select" required>
                     <option value="">Selecione o Tipo</option>
@@ -48,18 +47,15 @@
 
             <div th:if="${session.usuario != null and session.usuario.admin}" class="mb-3">
                 <label for="correntista" class="form-label">Correntista</label>
-                <select th:field="*{correntista.id}" id="correntista" class="form-select" required>
+                <select th:field="*{correntista}" id="correntista" class="form-select" required>
                     <option value="">Selecione um Correntista</option>
                     <option th:each="cor : ${correntistaItems}"
                             th:value="${cor.id}"
                             th:text="${cor.nome}">
                     </option>
                 </select>
-                <div class="invalid-feedback">
-                    Por favor, selecione um correntista.
-                </div>
+                <p th:if="${#fields.hasErrors('correntista')}" th:errorsClass="error" th:errors="*{correntista}"></p>
             </div>
-
             <div id="diaFechamentoGroup" class="mb-3" style="display: none;">
                 <label for="diaFechamento" class="form-label">Dia de Fechamento (Cartão de Crédito)</label>
                 <input type="number" th:field="*{diaFechamento}" id="diaFechamento" class="form-control" min="1" max="31" />

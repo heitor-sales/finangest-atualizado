@@ -70,13 +70,33 @@ public class ContaController {
             return "redirect:/login/form"; 
         }
 
-        if (result.hasErrors()) {
+        // --- ALTERAÇÃO AQUI: Validação inteligente baseada no perfil do usuário ---
+        boolean possuiErrosReais = false;
+        if (usuarioLogado.isAdmin()) {
+            possuiErrosReais = result.hasErrors();
+        } else {
+            // Se não for admin, verificamos se há erros em OUTROS campos (ex: número, descrição)
+            // e ignoramos qualquer erro que venha do campo "correntista"
+            if (result.getGlobalErrorCount() > 0) {
+                possuiErrosReais = true;
+            } else {
+                for (org.springframework.validation.FieldError error : result.getFieldErrors()) {
+                    if (!error.getField().startsWith("correntista")) {
+                        possuiErrosReais = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (possuiErrosReais) {
             // Recarrega os correntistas se for admin para o Thymeleaf não quebrar na validação
             if (usuarioLogado.isAdmin()) {
                 model.addAttribute("correntistaItems", correntistaRepository.findAll());
             }
             return "contas/form";
         }
+        // ------------------------------------------------------------------------
 
         // Se NÃO for admin ou se for admin mas não selecionou nenhum correntista no select
         if (!usuarioLogado.isAdmin() || conta.getCorrentista() == null || conta.getCorrentista().getId() == null) {
