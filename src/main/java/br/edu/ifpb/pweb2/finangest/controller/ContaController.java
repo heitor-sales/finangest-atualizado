@@ -45,39 +45,24 @@ public class ContaController {
     @Autowired
     private TransacaoRepository transacaoRepository;
 
-    // Modificado para usar Model e HttpSession para verificar o admin
     @GetMapping("/form")
-public String getForm(Model model, HttpSession session) {
-    model.addAttribute("conta", new Conta());
-
-    Correntista usuarioLogado = (Correntista) session.getAttribute("usuario");
-    if (usuarioLogado != null && usuarioLogado.isAdmin()) {
-        model.addAttribute("correntistaItems", correntistaRepository.findAll());
-    }
-    return "contas/form"; 
-}
-
-    // Este @ModelAttribute não é mais necessário aqui, pois a lista de correntistas
-    // será adicionada condicionalmente no método getForm().
-    // @ModelAttribute("correntistaItems")
-    // public List<Correntista> getCorrentistas(){
-    //     try {
-    //         return correntistaRepository.findAll();
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return Collections.emptyList();
-    //     }
-    // }
-
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String adicioneOuAtualizeConta(@Valid Conta conta,BindingResult result,HttpSession session,RedirectAttributes ra) {
-        
-        if(result.hasErrors()){
-            return "contas/form";
-            
+    public String getForm(Model model, HttpSession session, RedirectAttributes ra) {
+        Correntista usuarioLogado = (Correntista) session.getAttribute("usuario");
+        if (usuarioLogado == null) {
+            ra.addFlashAttribute("mensagem", "Sessão expirada ou usuário não logado. Por favor, faça login.");
+            return "redirect:/login/form"; 
         }
 
+        model.addAttribute("conta", new Conta());
 
+        if (usuarioLogado.isAdmin()) {
+            model.addAttribute("correntistaItems", correntistaRepository.findAll());
+        }
+        return "contas/form"; 
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String adicioneOuAtualizeConta(@Valid Conta conta, BindingResult result, HttpSession session, RedirectAttributes ra, Model model) {
         Correntista usuarioLogado = (Correntista) session.getAttribute("usuario");
 
         if (usuarioLogado == null) {
@@ -85,20 +70,20 @@ public String getForm(Model model, HttpSession session) {
             return "redirect:/login/form"; 
         }
 
-        
-        // 1. Se o usuário NÃO for admin
-        // 2. OU se o usuário for admin mas NÃO SELECIONOU um correntista no formulário
+        if (result.hasErrors()) {
+            // Recarrega os correntistas se for admin para o Thymeleaf não quebrar na validação
+            if (usuarioLogado.isAdmin()) {
+                model.addAttribute("correntistaItems", correntistaRepository.findAll());
+            }
+            return "contas/form";
+        }
+
+        // Se NÃO for admin ou se for admin mas não selecionou nenhum correntista no select
         if (!usuarioLogado.isAdmin() || conta.getCorrentista() == null || conta.getCorrentista().getId() == null) {
-            // Associa a conta ao correntista logado
-            // busca o correntista completo do banco de dados para evitar
-            // TransientObjectException ao salvar a Conta no JPA.
             Correntista correntistaCompleto = correntistaRepository.findById(usuarioLogado.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Correntista logado não encontrado!"));
             conta.setCorrentista(correntistaCompleto);
         } else {
-            // Se for admin e um correntista foi selecionado no formulário,
-            // associa a conta ao correntista selecionado.
-            // Também busca o correntista completo para evitar TransientObjectException.
             Correntista correntistaSelecionado = correntistaRepository.findById(conta.getCorrentista().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Correntista selecionado não encontrado!"));
             conta.setCorrentista(correntistaSelecionado);
@@ -125,10 +110,8 @@ public String getForm(Model model, HttpSession session) {
 
         List<Conta> contas;
         if (usuarioLogado.isAdmin()) {
-            contas = contaService.findall(); // Administrador vê todas as contas
+            contas = contaService.findall(); 
         } else {
-            // Usuário comum vê apenas suas próprias contas
-            
             contas = contaService.findByCorrentista(usuarioLogado); 
         }
 
@@ -157,8 +140,6 @@ public String getForm(Model model, HttpSession session) {
             return "redirect:/contas/list";
         }
 
-        // Verifica se o usuário logado tem permissão para editar esta conta
-        // Admins podem editar qualquer conta. Não-admins só podem editar suas próprias contas.
         if (!usuarioLogado.isAdmin() && !conta.getCorrentista().getId().equals(usuarioLogado.getId())) {
             ra.addFlashAttribute("mensagem", "Você não tem permissão para editar esta conta.");
             return "redirect:/contas/list"; 
@@ -171,7 +152,6 @@ public String getForm(Model model, HttpSession session) {
         }
         return "contas/form"; 
     }
-
 
     @GetMapping("/delete/{id}")
     public String deleteConta(@PathVariable(name = "id") Integer id, HttpSession session, RedirectAttributes ra) {
@@ -189,7 +169,6 @@ public String getForm(Model model, HttpSession session) {
             return "redirect:/contas/list";
         }
 
-        // Verifica permissão para exclusão
         if (!usuarioLogado.isAdmin() && !conta.getCorrentista().getId().equals(usuarioLogado.getId())) {
             ra.addFlashAttribute("mensagem", "Você não tem permissão para excluir esta conta.");
             return "redirect:/contas/list";
@@ -224,7 +203,6 @@ public String getForm(Model model, HttpSession session) {
         }
         Conta conta = contaOpt.get();
 
-        // Verificar se o usuário logado tem permissão para ver o extrato desta conta
         if (!usuarioLogado.isAdmin() && !conta.getCorrentista().getId().equals(usuarioLogado.getId())) {
             ra.addFlashAttribute("mensagem", "Você não tem permissão para visualizar o extrato desta conta.");
             return "redirect:/contas/list";
@@ -242,7 +220,6 @@ public String getForm(Model model, HttpSession session) {
             }
         } catch (Exception e) {
             ra.addFlashAttribute("mensagem", "Formato de data inválido. Use AAAA-MM-DD.");
-            // Redireciona de volta para o extrato da mesma conta com a mensagem de erro
             return "redirect:/contas/" + id + "/extrato";
         }
 
