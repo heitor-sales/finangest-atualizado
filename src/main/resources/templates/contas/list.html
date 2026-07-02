@@ -48,6 +48,8 @@
                     <td th:text="${conta.correntista?.nome}"></td>
                     <td th:text="${conta.saldo}"></td>
                     <td>
+                        <a th:href="@{/transacoes/form(contaId=${conta.id})}" class="btn btn-sm btn-success">+ Transação</a>
+                        
                         <a th:href="@{/contas/edit/{id}(id=${conta.id})}" class="btn btn-sm btn-info">Editar</a>
                         <a th:href="@{/contas/delete/{id}(id=${conta.id})}" class="btn btn-sm btn-danger">Excluir</a>
                     </td>
