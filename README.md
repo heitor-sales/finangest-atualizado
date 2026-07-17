@@ -44,7 +44,7 @@ O sistema conta com endpoints RESTful para fácil integração com front-ends SP
 | `PUT` | `/api/categorias/{id}` | Atualiza informações de uma categoria específica |
 | `DELETE` | `/api/categorias/{id}` | Exclui/Desativa uma categoria do sistema |
 
-## ⚙️ Como Executar
+## ⚙️ Como Executar Localmente
 
 1. Acesse a pasta do projeto e execute com o Maven:
    `./mvnw spring-boot:run`
