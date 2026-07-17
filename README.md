@@ -1,7 +1,7 @@
-# SpendWise - Controle Financeiro 💰
+# Finangest - Controle Financeiro 💰
 
 ## 📋 Sobre o Projeto
-O **SpendWise** é um sistema web de gestão financeira pessoal construído em **Java com Spring Boot**. O objetivo principal é permitir que os usuários registrem e acompanhem suas transações (créditos e débitos) em diferentes tipos de contas (Contas-Correntes e Cartões de Crédito). 
+O **Finangest** é um sistema web de gestão financeira pessoal construído em **Java com Spring Boot**. O objetivo principal é permitir que os usuários registrem e acompanhem suas transações (créditos e débitos) em diferentes tipos de contas (Contas-Correntes e Cartões de Crédito). 
 
 Este projeto foi desenvolvido como parte de requisitos acadêmicos e **expandido para o mercado** com a implementação de uma **Arquitetura Híbrida**, oferecendo tanto a renderização de views no servidor quanto a exposição de dados via **API REST**.
 
